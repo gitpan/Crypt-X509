@@ -69,14 +69,14 @@ by Chriss Ridd.
 
 Creates and returns a parsed X.509 certificate hash, containing the parsed
 contents. The data is organised as specified in RFC 2459.
-By default only the first ASN.1 Layer is decoded. Nested decoding 
+By default only the first ASN.1 Layer is decoded. Nested decoding
 is done automagically through the data access methods.
 
 =over 4
 
 =item cert =E<gt> $certificate
 
-A variable containing the DER formatted certificate to be parsed 
+A variable containing the DER formatted certificate to be parsed
 (eg. as stored in C<usercertificate;binary> attribute in an
 LDAP-directory).
 
@@ -84,9 +84,9 @@ LDAP-directory).
 
   use Crypt::X509;
   use Data::Dumper;
-  
+
   $decoded= Crypt::X509->new(cert => $cert);
-  
+
   print Dumper($decoded);
 
 =cut back
@@ -106,7 +106,7 @@ sub new {
 
 =head2 error
 
-Returns the last error from parsing, C<undef> when no error occured. 
+Returns the last error from parsing, C<undef> when no error occured.
 This error is updated on deeper parsing with the data access methods.
 
 
@@ -128,9 +128,9 @@ You can access all parsed data directly from the returned hash. For convenience
 the following methods have been implemented to give quick access to the most-used
 certificate attributes.
 
-=head2 version 
+=head2 version
 
-Returns the certificate's version as an integer.  NOTE that version is defined as 
+Returns the certificate's version as an integer.  NOTE that version is defined as
 an Integer where 0 = v1, 1 = v2, and 2 = v3.
 
 =cut back
@@ -142,7 +142,7 @@ sub version {
 
 =head2 version_string
 
-Returns the certificate's version as a string value. 
+Returns the certificate's version as a string value.
 
 =cut back
 
@@ -161,7 +161,7 @@ evaluated in scalar context) from the certificate
 
 
   $decoded= Crypt::X509->new(cert => $cert);
-  print "Certificate has serial number:".$decoded->serial."\n";  
+  print "Certificate has serial number:".$decoded->serial."\n";
 
 =cut back
 
@@ -179,7 +179,7 @@ RFC to been correct.
 As utcTime is limited to 32-bit values (like unix-timestamps) newer certificates
 hold the timesamps as "generalTime"-entries. B<The contents of "generalTime"-entries
 are not well defined in the RFC and
-are returned by this module unmodified>, if no utcTime-entry is found. 
+are returned by this module unmodified>, if no utcTime-entry is found.
 
 
   $decoded= Crypt::X509->new(cert => $cert);
@@ -209,7 +209,7 @@ RFC to been correct.
 As utcTime is limited to 32-bit values (like unix-timestamps) newer certificates
 hold the timesamps as "generalTime"-entries. B<The contents of "generalTime"-entries
 are not well defined in the RFC and
-are returned by this module unmodified>, if no utcTime-entry is found. 
+are returned by this module unmodified>, if no utcTime-entry is found.
 
 
   $decoded= Crypt::X509->new(cert => $cert);
@@ -278,9 +278,9 @@ returns the subject public key encryption algorithm (e.g. 'RSA') as string.
 
   $decoded= Crypt::X509->new(cert => $cert);
   print "Certificate public key is encrypted with:".$decoded->PubKeyAlg."\n";
-  
+
   Example Output: Certificate public key is encrypted with: RSA
-  
+
 =cut back
 
 sub PubKeyAlg {
@@ -315,7 +315,7 @@ Returns the certificate's signature algorithm as OID string
 
   $decoded= Crypt::X509->new(cert => $cert);
   print "Certificate signature is encrypted with:".$decoded->sig_algorithm."\n";>
-  
+
   Example Output: Certificate signature is encrypted with: 1.2.840.113549.1.1.5
 
 =cut back
@@ -331,7 +331,7 @@ returns the signature encryption algorithm (e.g. 'RSA') as string.
 
   $decoded= Crypt::X509->new(cert => $cert);
   print "Certificate signature is encrypted with:".$decoded->SigEncAlg."\n";
-  
+
   Example Output: Certificate signature is encrypted with: RSA
 
 =cut back
@@ -363,7 +363,7 @@ sub SigHashAlg {
 =head2 Subject
 
 returns a pointer to an array of strings containing subject nameparts of the
-certificate. Attributenames for the most common Attributes are translated 
+certificate. Attributenames for the most common Attributes are translated
 from the OID-Numbers, unknown numbers are output verbatim.
 
   $decoded= Convert::ASN1::X509->new($cert);
@@ -405,7 +405,7 @@ sub _subject_part {
 	return undef;
 }
 
-=head2 subject_country 
+=head2 subject_country
 
 Returns the string value for subject's country (= the value with the
  OID 2.5.4.6 or in DN Syntax everything after C<C=>).
@@ -433,7 +433,7 @@ sub subject_locality {
 
 =head2 subject_state
 
-Returns the string value for subject's state or province (= the value with the 
+Returns the string value for subject's state or province (= the value with the
 OID 2.5.4.8 or in DN Syntax everything after C<S=>).
 Only the first entry is returned. C<undef> if subject contains no state attribute.
 
@@ -470,7 +470,7 @@ sub subject_ou {
 	return _subject_part( $self, '2.5.4.11' );
 }
 
-=head2 subject_cn 
+=head2 subject_cn
 
 Returns the string value for subject's common name (= the value with the
 OID 2.5.4.3 or in DN Syntax everything after C<CN=>).
@@ -544,7 +544,7 @@ sub _issuer_part {
 	return undef;
 }
 
-=head2 issuer_cn 
+=head2 issuer_cn
 
 Returns the string value for issuer's common name (= the value with the
 OID 2.5.4.3 or in DN Syntax everything after C<CN=>).
@@ -557,7 +557,7 @@ sub issuer_cn {
 	return _issuer_part( $self, '2.5.4.3' );
 }
 
-=head2 issuer_country 
+=head2 issuer_country
 
 Returns the string value for issuer's country (= the value with the
  OID 2.5.4.6 or in DN Syntax everything after C<C=>).
@@ -572,7 +572,7 @@ sub issuer_country {
 
 =head2 issuer_state
 
-Returns the string value for issuer's state or province (= the value with the 
+Returns the string value for issuer's state or province (= the value with the
 OID 2.5.4.8 or in DN Syntax everything after C<S=>).
 Only the first entry is returned. C<undef> if issuer contains no state attribute.
 
@@ -627,7 +627,7 @@ sub issuer_email {
 
 =head2 KeyUsage
 
-returns a pointer to an array of strings describing the valid Usages 
+returns a pointer to an array of strings describing the valid Usages
 for this certificate. C<undef> is returned, when the extension is not set in the
 certificate.
 
@@ -638,7 +638,7 @@ If the extension is marked critical, this is also reported.
 
   Example Output:
   Allowed usages for this Certificate are:
-  critical 
+  critical
   digitalSignature
   keyEncipherment
   dataEncipherment
@@ -679,14 +679,14 @@ sub KeyUsage {
 =head2 ExtKeyUsage
 
 returns a pointer to an array of ExtKeyUsage strings (or OIDs for unknown OIDs) or
-C<undef> if the extension is not filled. OIDs of the following ExtKeyUsages are known: 
+C<undef> if the extension is not filled. OIDs of the following ExtKeyUsages are known:
 serverAuth, clientAuth, codeSigning, emailProtection, timeStamping, OCSPSigning
 
 If the extension is marked critical, this is also reported.
 
   $decoded= Crypt::X509->new($cert);
   print "ExtKeyUsage extension of this Certificates is: ", join(", ", @{$decoded->ExtKeyUsage}), "\n";
-  
+
   Example Output: ExtKeyUsage extension of this Certificates is: critical, serverAuth
 
 =cut back
@@ -732,7 +732,7 @@ It also pre-pends the field type (ie rfc822Name) to the returned value.
 
   $decoded= Crypt::X509->new($cert);
   print "E-Mail or Hostnames in this Certificates is/are:", join(", ", @{$decoded->SubjectAltName}), "\n";
-  
+
   Example Output: E-Mail or Hostnames in this Certificates is/are: rfc822Name=user@server.com
 
 =cut back
@@ -1058,7 +1058,7 @@ sub CertificatePolicies {
 Returns the EntrustVersion as a string
 
 	print "Entrust Version: ", $decoded->EntrustVersion, "\n";
-	
+
 	Example Output: Entrust Version: V7.0
 
 =cut back
@@ -1088,7 +1088,7 @@ sub EntrustVersion {
 Returns the SubjectDirectoryAttributes as an array of key = value pairs, to include a data type
 
 	print "Subject Directory Attributes: ", join( ', ' , @{ $decoded->SubjectDirectoryAttributes } ), "\n";
-	
+
 	Example Output: Subject Directory Attributes: 1.2.840.113533.7.68.29 = 7 (integer)
 
 =cut back
@@ -1185,20 +1185,20 @@ sub _SubjectKeyIdentifier {
 
 Returns the SubjectInfoAccess as an array of hashes with key=value pairs.
 
-		print "Subject Info Access: ";
-		if ( defined $decoded->SubjectInfoAccess ) {
-			my %SIA = $decoded->SubjectInfoAccess;
-			for my $key ( keys %SIA ) {
-				print "\n\t$key: \n\t";
-				print join( "\n\t" , @{ $SIA{$key} } ), "\n";
-			}
-		} else { print "\n" }
-	
-	Example Output: 
-		Subject Info Access: 
-			1.3.6.1.5.5.7.48.5: 
-			uniformResourceIdentifier = http://pki.treas.gov/root_sia.p7c
-			uniformResourceIdentifier = ldap://ldap.treas.gov/ou=US%20Treasury%20Root%20CA,ou=Certification%20Authorities,ou=Department%20of%20the%20Treasury,o=U.S.%20Government,c=US?cACertificate;binary,crossCertificatePair;binary
+        print "Subject Info Access: ";
+        if ( defined $decoded->SubjectInfoAccess ) {
+            my %SIA = $decoded->SubjectInfoAccess;
+            for my $key ( keys %SIA ) {
+                print "\n\t$key: \n\t";
+                print join( "\n\t" , @{ $SIA{$key} } ), "\n";
+            }
+        } else { print "\n" }
+
+    Example Output:
+        Subject Info Access:
+            1.3.6.1.5.5.7.48.5:
+            uniformResourceIdentifier = http://pki.treas.gov/root_sia.p7c
+            uniformResourceIdentifier = ldap://ldap.treas.gov/ou=US%20Treasury%20Root%20CA,ou=Certification%20Authorities,ou=Department%20of%20the%20Treasury,o=U.S.%20Government,c=US?cACertificate;binary,crossCertificatePair;binary
 
 =cut back
 
@@ -1225,6 +1225,48 @@ sub SubjectInfoAccess {
 	return undef;
 }
 
+=head2 AuthorityInfoAccess
+
+Returns the AuthorityInfoAccess (AIA) as an array of hashes with key=value pairs.
+
+        print "Authority Info Access: ";
+        if ( defined $decoded->AuthorityInfoAccess ) {
+            my %AIA = $decoded->AuthorityInfoAccess;
+            for my $key ( keys %AIA ) {
+                print "\n\t$key: \n\t";
+                print join( "\n\t" , @{ $AIA{$key} } ), "\n";
+            }
+        } else { print "\n" }
+
+    Example Output:
+        Authority Info Access:
+            1.3.6.1.5.5.7.48.2:
+            uniformResourceIdentifier = http://nfirootweb.managed.entrust.com/AIA/CertsIssuedToNFIRootCA.p7c
+            uniformResourceIdentifier = ldap://nfirootdir.managed.entrust.com/ou=Entrust%20Managed%20Services%20NFI%20Root%20CA,ou=Certification%20Authorities,o=Entrust,c=US?cACertificate;binary,crossCertificatePair;binary
+
+=cut back
+# AuthorityInfoAccess (another extension)
+sub AuthorityInfoAccess {
+    my $self = shift;
+    my $extension;
+    my %AIA;
+    my $extensions = $self->{'tbsCertificate'}->{'extensions'};
+    if ( !defined $extensions ) { return undef; }
+    ;    # no extensions in certificate
+    for $extension ( @{$extensions} ) {
+        if ( $extension->{'extnID'} eq '1.3.6.1.5.5.7.1.1' ) {    # OID for AuthorityInfoAccess
+            my $parser              = _init('AuthorityInfoAccessSyntax');                # get a parser for this
+            my $authority_info_access = $parser->decode( $extension->{'extnValue'} );    # decode the value
+            for my $aia ( @{$authority_info_access} ) {
+                for my $key ( keys %{ $aia->{'accessLocation'} } ) {
+                    push @{ $AIA{ $aia->{'accessMethod'} } }, "$key = " . $aia->{'accessLocation'}{$key};
+                }
+            }
+            return %AIA;
+        }
+    }
+    return undef;
+}
 
 =head2 PGPExtension
 
@@ -1278,19 +1320,19 @@ sub _init {
 		$asn->prepare(<<ASN1);
 -- ASN.1 from RFC2459 and X.509(2001)
 -- Adapted for use with Convert::ASN1
--- Id: x509decode,v 1.1 2002/02/10 16:41:28 gbarr Exp 
+-- Id: x509decode,v 1.1 2002/02/10 16:41:28 gbarr Exp
 
 -- attribute data types --
 
 Attribute ::= SEQUENCE {
 	type			AttributeType,
 	values			SET OF AttributeValue
-		-- at least one value is required -- 
+		-- at least one value is required --
 	}
 
 AttributeType ::= OBJECT IDENTIFIER
 
-AttributeValue ::= DirectoryString  --ANY 
+AttributeValue ::= DirectoryString  --ANY
 
 AttributeTypeAndValue ::= SEQUENCE {
 	type			AttributeType,
@@ -1300,15 +1342,15 @@ AttributeTypeAndValue ::= SEQUENCE {
 
 -- naming data types --
 
-Name ::= CHOICE { -- only one possibility for now 
-	rdnSequence		RDNSequence 			
+Name ::= CHOICE { -- only one possibility for now
+	rdnSequence		RDNSequence
 	}
 
 RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
 
 DistinguishedName ::= RDNSequence
 
-RelativeDistinguishedName ::= 
+RelativeDistinguishedName ::=
 	SET OF AttributeTypeAndValue  --SET SIZE (1 .. MAX) OF
 
 
@@ -1427,7 +1469,7 @@ PrivateKeyUsagePeriod ::= SEQUENCE {
      notBefore       [0]     GeneralizedTime OPTIONAL,
      notAfter        [1]     GeneralizedTime OPTIONAL }
      -- either notBefore or notAfter shall be present
-     
+
 -- certificate policies extension OID and syntax
 -- id-ce-certificatePolicies OBJECT IDENTIFIER ::=  { id-ce 32 }
 
@@ -1550,7 +1592,7 @@ GeneralSubtree ::= SEQUENCE {
      minimum         [0]     BaseDistance OPTIONAL, --DEFAULT 0,
      maximum         [1]     BaseDistance OPTIONAL }
 
-BaseDistance ::= INTEGER 
+BaseDistance ::= INTEGER
 
 
 -- policy constraints extension OID and syntax
@@ -1560,7 +1602,7 @@ PolicyConstraints ::= SEQUENCE {
      requireExplicitPolicy           [0] SkipCerts OPTIONAL,
      inhibitPolicyMapping            [1] SkipCerts OPTIONAL }
 
-SkipCerts ::= INTEGER 
+SkipCerts ::= INTEGER
 
 
 -- CRL distribution points extension OID and syntax
@@ -1648,7 +1690,7 @@ Convert::ASN1 in 2002 by Norbert Klasen.
 
 =head1 AUTHORS
 
-Mike Jackson <mj@sci.fi>, 
+Mike Jackson <mj@sci.fi>,
 Alexander Jung <alexander.w.jung@gmail.com>,
 Duncan Segrest <duncan@gigageek.info>
 
